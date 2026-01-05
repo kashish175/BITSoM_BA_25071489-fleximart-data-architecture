@@ -7,14 +7,11 @@ from sqlalchemy import text
 from sqlalchemy import create_engine
 import mysql.connector
 
-# 1. Get the directory of the script
 script_dir = os.path.dirname(os.path.abspath(__file__))
-
-# 2. Go UP one level to the root where the 'Data' folder lives
 root_dir = os.path.dirname(script_dir)
 data_folder = os.path.join(root_dir, "Data")
 
-# 1. Initialize report metrics (The Scoreboard)
+# 1. Initial report metrics (The Scoreboard)
 report_metrics = {
     "records_processed": {}, # To store counts for Customers, Products, Sales
     "duplicates_removed": 0,
@@ -90,13 +87,13 @@ def standardize_phone(phone):
     # Return the standardized string
     return f"+91-{clean_p[-10:]}"
 
-# Apply the function to the 'phone' column
+# Applying the function to the 'phone' column
 df_customers['phone'] = df_customers['phone'].apply(standardize_phone)
 
-# Let's check the results
+#  Checking the results
 print(df_customers[['first_name', 'phone']].head())
 
-# 4. Convert date formats to YYYY-MM-DD
+# 4. Converting date formats to YYYY-MM-DD
 print("Converting date formats to YYYY-MM-DD ......... ")
 df_customers['registration_date'] = pd.to_datetime(df_customers['registration_date'], format='mixed', errors='coerce')
 
@@ -295,6 +292,7 @@ order_items_final['subtotal'] = order_items_final['quantity'] * order_items_fina
 print ("Clean data for 'Order_item Table' ")
 print(order_items_final.head())
 
+#  MySQL connection setup
 
 import os
 from sqlalchemy import create_engine
